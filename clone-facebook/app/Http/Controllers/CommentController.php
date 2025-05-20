@@ -12,7 +12,8 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function getComentByPostID($id)
+    // Get all comments for a specific post
+    public function getAllCommentByPostID($id)
     {
         // Get all comments for a specific post
         $comments = Comment::where('post_id', $id)->with('user')->get();
@@ -29,14 +30,18 @@ class CommentController extends Controller
             200
         );
     }
-
+    //
+    /**
+     * Store a newly created resource in storage.
+     */
+    // Create a new comment for a specific post
     public function storeCommentByPostID(Request $request, $id)
     {
         $request->validate([
             'content' => 'required|string|max:255',
         ]);
 
-        $comment = new Comment();
+        $comment = new Comment(); // Create a new comment instance
         $comment->user_id = Auth::id(); // Get the authenticated user ID
         $comment->post_id = $id; // Set the post ID
         $comment->content = $request->input('content'); // Set the comment content
@@ -53,6 +58,7 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // Update a comment by its ID
     public function updateCommentByID(Request $request, $id)
     {
         $comment = Comment::find($id); // Find the comment by ID

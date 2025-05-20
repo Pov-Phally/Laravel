@@ -24,15 +24,15 @@ Route::group(
         Route::delete('/delete', [AuthController::class, 'deleteUser']);
 
         Route::get('/posts', [PostController::class, 'index']);
-        Route::post('/post/create', [PostController::class, 'store']);
-        Route::get('/post/{id}', [PostController::class, 'show']);
-        Route::get('/post/update/{id}', [PostController::class, 'update']);
+        Route::post('/post/create', [PostController::class, 'storePost']);
+        Route::get('/post/{id}', [PostController::class, 'showPostByID']);
+        Route::get('/post/update/{id}', [PostController::class, 'updatePostByID']);
         Route::delete('/post/delete/{id}', [PostController::class, 'destroy']);
 
         Route::get('/likes/{id}', [LikeController::class, 'getLikeByPostID']);
-        Route::post('/like/{id}', [LikeController::class, 'Liked']);
+        Route::post('/like/{id}', [LikeController::class, 'LikednDislikedByPostID']);
 
-        Route::get('/comments/{id}', [CommentController::class, 'getComentByPostID']);
+        Route::get('/comments/{id}', [CommentController::class, 'getAllCommentByPostID']);
         Route::post('/comment/create/{id}', [CommentController::class, 'storeCommentByPostID']);
         Route::get('/comment/update/{id}', [CommentController::class, 'updateCommentByID']);
         Route::delete('/comment/delete/{id}', [CommentController::class, 'destroy']);
