@@ -19,9 +19,9 @@ Route::get('/login', [AuthController::class, 'login']);
 Route::group(
     ['middleware' => 'auth:api'],
     function ($router) {
-        Route::post('/update', [AuthController::class, 'updateUserdata']);
+        Route::post('/update/{id}', [AuthController::class, 'updateUserdataByID']);
         Route::post('/logout', [AuthController::class, 'logout']);
-        Route::delete('/delete', [AuthController::class, 'deleteUser']);
+        Route::delete('/delete/{id}', [AuthController::class, 'deleteUserByID']);
 
         Route::get('/posts', [PostController::class, 'index']);
         Route::post('/post/create', [PostController::class, 'storePost']);

@@ -67,10 +67,19 @@ class AuthController extends Controller
     }
 
     //update user details
-    public function updateUserdata(Request $request)
+    public function updateUserdataByID(Request $request, $id)
     {
-        // Get the authenticated user
-        $user = Auth::user();
+        //find the user by id
+        $user = User::find($id);
+        //check if user exists
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        //check if user is authorized to update the user
+        if (Auth::user()->id != $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         // Validate the request data
         $data = $request->only([
             'name',
@@ -110,12 +119,17 @@ class AuthController extends Controller
         return response()->json(['message' => 'User logged out successfully'], 200);
     }
     //delete user
-    public function deleteUser(Request $request,)
+    public function deleteUserByID(Request $request, $id)
     {
-        // Get the authenticated user
-        $user = Auth::user();
+        // Find the user by ID
+        $user = User::find($id);
+        // Check if the user exists
         if (!$user) {
             return response()->json(['message' => 'Unauthenticated'], 404);
+        }
+        // Check if the authenticated user is the owner of the user
+        if (Auth::user()->id != $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
         //delete the user
         $user->delete();
